@@ -1,0 +1,20 @@
+kraft-controller:
+  secretName: kraft-controller-ssslcerts
+  #namespace: ns-7dkafmrsc-int
+  #issuerName: kube-auth-clister-issuer-int
+kafka:
+  secretName: kafka-ssslcerts
+  #namespace: ns-7dkafmrsc-int
+  #issuerName: kube-auth-clister-issuer-int
+controlcenter:
+  secretName: kafka-ssslcerts
+  #namespace: ns-7dkafmrsc-int
+  #issuerName: kube-auth-clister-issuer-int
+schema-registry:
+  secretName: schema-registry-ssslcerts
+  #namespace: ns-7dkafmrsc-int
+  #issuerName: kube-auth-clister-issuer-int
+connect:
+  secretName: connect-ssslcerts
+  #namespace: ns-7dkafmrsc-int
+  #issuerName: kube-auth-clister-issuer-int

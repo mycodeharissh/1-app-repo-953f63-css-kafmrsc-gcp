@@ -1,0 +1,30 @@
+apiversion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.schemaregistry.secretName }}
+  namespace: {{ .Values.schemaregistry.namespace }}
+  annotations:
+    strategy.harness.io/recreate: {{ Values.certificatesRecreate | quote }}
+spec:
+  secretTemplate:
+    annotations:
+      moniker.harness.io/application: {{ .Values.schemaregistry.application }}
+      moniker.harness.io/cluster: {{.Values.schemaregistry.cluster }}
+  secretName: {{ .Values.schemaregistry.secretName }}
+  {{- if.Values.schemaregistry.duration }}
+  privatekey:
+    algorithm: RSA
+    size: 2048
+  duration: {{ .Values.schemaregistry.duration }}
+  {{- end }}
+  {{- if values.schemaregistry.renewBefore }}
+  renewBefore: {{ .values.schemaregistry.renewBefore }}
+  {{- end }}
+  IssuerRef:
+    name: {{ .Values.schemaregistry.issuerName }}
+    kind: ClusterIssuer
+    commonName: {{ .Values.schemaregistry.commonName }}
+    dnsnames:
+    {{- range .Values.schemaregistry.dnsNames }}
+    - {{ . | quote }}
+    {{- end -}}
