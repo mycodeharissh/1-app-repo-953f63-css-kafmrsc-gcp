@@ -1,0 +1,30 @@
+apiversion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.kraftcontroller.secretName }}
+  namespace: {{ .Values.kraftcontroller.namespace }}
+  annotations:
+    strategy.harness.io/recreate: {{ Values.certificatesRecreate | quote }}
+spec:
+  secretTemplate:
+    annotations:
+      moniker.harness.io/application: {{ .Values.kraftcontroller.application }}
+      moniker.harness.io/cluster: {{.Values.kraftcontroller.cluster }}
+  secretName: {{ .Values.kraftcontroller.secretName }}
+  {{- if.Values.kraftcontroller.duration }}
+  privatekey:
+    algorithm: RSA
+    size: 2048
+  duration: {{ .Values.kraftcontroller.duration }}
+  {{- end }}
+  {{- if values.kraftcontroller.renewBefore }}
+  renewBefore: {{ .values.kraftcontroller.renewBefore }}
+  {{- end }}
+  IssuerRef:
+    name: {{ .Values.kraftcontroller.issuerName }}
+    kind: ClusterIssuer
+    commonName: {{ .Values.kraftcontroller.commonName }}
+    dnsnames:
+    {{- range .Values.kraftcontroller.dnsNames }}
+    - {{ . | quote }}
+    {{- end -}}
