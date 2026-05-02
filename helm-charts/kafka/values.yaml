@@ -1,0 +1,41 @@
+global:
+  registry:
+    fqdn: innersource-artefacts-docker.optum.cloud/ingested/confluentinc
+    credentials:
+     required: false
+  ininContainer:
+   image:
+    repository: cp-init-container-operator
+    tag: 3.1.0
+image:
+  repository: cp-server
+  tag: 3.1.0
+spec:
+  replicas: 3
+  dataVolumeCapacity: 10Gi
+  tls:
+    secretRef: kafka-sslcerts
+  listeners:
+    internal:
+      authentication:
+        <<need to update>>
+      tls:
+        enabled: false
+    external:
+      authentication:
+        type: rbac
+        superUsers:
+          <<need to update>>
+      services:
+        mds:
+          <<need to update>>
+resources:
+  <<need to update>>
+name: kafka
+loadbalancer:
+  domain: <<need to update>>
+configOverrides:
+  server:
+    <<need to update>>
+  jvm: []
+  log4j: []
